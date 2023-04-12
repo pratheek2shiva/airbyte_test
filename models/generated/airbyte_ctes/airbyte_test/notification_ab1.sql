@@ -13,8 +13,30 @@ select
     {{ json_extract_scalar('_airbyte_data', ['GUID'], ['GUID']) }} as GUID,
     {{ json_extract_scalar('_airbyte_data', ['request_url'], ['request_url']) }} as request_url,
     {{ json_extract('table_alias', '_airbyte_data', ['payload'], ['payload']) }} as payload,
+    STRUCT(
+   {{ json_extract_scalar('_airbyte_data', ['payload', 'user_id_list'], ['user_id_list']) }} as user_id_list,
+   {{ json_extract_scalar('_airbyte_data', ['payload', 'event_type'], ['event_type']) }} as event_type,
+        {{ json_extract_scalar('_airbyte_data', ['payload', 'from_email'], ['from_email']) }} as from_email,
+   {{ json_extract_scalar('_airbyte_data', ['payload', 'transaction_idd'], ['transaction_idd']) }} as transaction_idd,
+        {{ json_extract_scalar('_airbyte_data', ['payload', 'project_id'], ['project_id']) }} as project_id,
+   {{ json_extract_scalar('_airbyte_data', ['payload', 'notification_data'], ['notification_data']) }} as notification_data,
+        {{ json_extract_scalar('_airbyte_data', ['payload', 'title_notify_data'], ['title_notify_data']) }} as title_notify_data,
+   {{ json_extract_scalar('_airbyte_data', ['payload', 'category_type'], ['category_type']) }} as category_type,
+         {{ json_extract_scalar('_airbyte_data', ['payload', 'origin_service'], ['origin_service']) }} as origin_service,
+   {{ json_extract_scalar('_airbyte_data', ['payload', 'medium_list'], ['medium_list']) }} as medium_list
+        
+) as payload1,
+    
     {{ json_extract_scalar('_airbyte_data', ['service'], ['service']) }} as service,
     {{ json_extract('table_alias', '_airbyte_data', ['response'], ['response']) }} as response,
+    
+     STRUCT(
+   {{ json_extract_scalar('_airbyte_data', ['response', 'MESSAGEACK'], ['MESSAGEACK']) }} as MESSAGEACK,
+   {{ json_extract_scalar('_airbyte_data', ['response', 'GUID'], ['GUID']) }} as GUID,
+   {{ json_extract_scalar('_airbyte_data', ['response', 'description'], ['description']) }} as description,
+   {{ json_extract_scalar('_airbyte_data', ['response', 'msg_length'], ['msg_length']) }} as msg_length     
+) as response1,
+    
     {{ json_extract_scalar('_airbyte_data', ['id'], ['id']) }} as id,
     {{ json_extract_scalar('_airbyte_data', ['_id'], ['_id']) }} as _id,
     {{ json_extract_scalar('_airbyte_data', ['sent_notificationid'], ['sent_notificationid']) }} as sent_notificationid,
