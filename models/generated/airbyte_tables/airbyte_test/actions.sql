@@ -1,6 +1,4 @@
 {{ config(
-    cluster_by = "_airbyte_emitted_at",
-    partition_by = {"field": "_airbyte_emitted_at", "data_type": "timestamp", "granularity": "day"},
     unique_key = '_airbyte_ab_id',
     schema = "airbyte_test",
     post_hook = ["
@@ -27,9 +25,9 @@ select
     ack_time,
     sub_id,
     created,
-    pr_id,
+    safe_cast(pr_id as Int) as pr_id,
     ack,
-    uid,
+    safe_cast(uid as Int) as uid,
     sent_time,
     mqtt,
     service_id,
